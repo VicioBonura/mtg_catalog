@@ -11,62 +11,65 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('supertypes', function (Blueprint $table) {
+            $table->id()->primary()->autoIncrement();
+            $table->string('name')->unique();
+        });
+
+        Schema::create('rarities', function (Blueprint $table) {
+            $table->id()->primary()->autoIncrement();
+            $table->string('name')->unique();
+        });
+
         Schema::create('cards', function (Blueprint $table) {
             $table->id()->primary()->autoIncrement();
             $table->string('name');
             $table->foreignId('set_id')->constrained('sets');
-            $table->foreignId('type_id')->constrained('types')->nullable();
-            $table->foreignId('subtype_id')->constrained('subtypes')->nullable();
-            $table->foreignId('rarity_id')->constrained('rarities')->nullable();
+            $table->foreignId('supertype_id')->nullable()->constrained('supertypes')->onDelete('set null');
+            $table->foreignId('rarity_id')->nullable()->constrained('rarities')->onDelete('set null');
             $table->string('mana_cost')->nullable();
             $table->integer('cmc')->nullable();
-            $table->foreignId('color_id')->constrained('colors')->nullable();
             $table->string('number')->nullable();
             $table->timestamps();
-
-            // handle nullable foreign keys
-            $table->foreign('type_id')->references('id')->on('types')->onDelete('set null');
-            $table->foreign('subtype_id')->references('id')->on('subtypes')->onDelete('set null');
-            $table->foreign('rarity_id')->references('id')->on('rarities')->onDelete('set null');
-            $table->foreign('color_id')->references('id')->on('colors')->onDelete('set null');
         });
 
         Schema::create('card_variants', function (Blueprint $table) {
             $table->id()->primary()->autoIncrement();
-            $table->foreignId('card_id')->constrained('cards');
+            $table->foreignId('card_id')->constrained('cards')->onDelete('cascade');
             $table->string('language');
             $table->boolean('is_foil');
             $table->integer('quantity');
-            $table->decimal('value_eur', 10, 2);
-            $table->decimal('value_usd', 10, 2);
             $table->timestamps();
-
-            // handle cascade delete
-            $table->foreign('card_id')->references('id')->on('cards')->onDelete('cascade');
         });
 
-        Schema::create('supertypes', function (Blueprint $table) {
+        Schema::create('market_infos', function (Blueprint $table) {
             $table->id()->primary()->autoIncrement();
-            $table->string('name')->unique();
+            $table->foreignId('card_variant_id')->constrained('card_variants')->onDelete('cascade');
+            $table->decimal('value_eur', 10, 2);
+            $table->decimal('value_usd', 10, 2);
             $table->timestamps();
         });
 
         Schema::create('types', function (Blueprint $table) {
             $table->id()->primary()->autoIncrement();
             $table->string('name')->unique();
-            $table->timestamps();
+        });
+
+        Schema::create('card_type', function (Blueprint $table) {
+            $table->id()->primary()->autoIncrement();
+            $table->foreignId('card_id')->constrained('cards')->onDelete('cascade');
+            $table->foreignId('type_id')->constrained('types')->onDelete('cascade');
         });
 
         Schema::create('subtypes', function (Blueprint $table) {
             $table->id()->primary()->autoIncrement();
             $table->string('name')->unique();
-            $table->timestamps();
         });
 
-        Schema::create('rarities', function (Blueprint $table) {
+        Schema::create('card_subtype', function (Blueprint $table) {
             $table->id()->primary()->autoIncrement();
-            $table->string('name')->unique();
-            $table->timestamps();
+            $table->foreignId('card_id')->constrained('cards')->onDelete('cascade');
+            $table->foreignId('subtype_id')->constrained('subtypes')->onDelete('cascade');
         });
 
         Schema::create('colors', function (Blueprint $table) {
@@ -75,6 +78,12 @@ return new class extends Migration
             $table->string('code');
             $table->string('symbol')->nullable();
         });
+
+        Schema::create('card_color', function (Blueprint $table) {
+            $table->id()->primary()->autoIncrement();
+            $table->foreignId('card_id')->constrained('cards')->onDelete('cascade');
+            $table->foreignId('color_id')->constrained('colors')->onDelete('cascade');
+        });
     }
 
     /**
@@ -82,11 +91,16 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('supertypes');
+        Schema::dropIfExists('rarities');
         Schema::dropIfExists('cards');
         Schema::dropIfExists('card_variants');
-        Schema::dropIfExists('supertypes');
+        Schema::dropIfExists('market_infos');
         Schema::dropIfExists('types');
+        Schema::dropIfExists('card_type');
         Schema::dropIfExists('subtypes');
-        Schema::dropIfExists('rarities');
+        Schema::dropIfExists('card_subtype');
+        Schema::dropIfExists('colors');
+        Schema::dropIfExists('card_color');
     }
 };

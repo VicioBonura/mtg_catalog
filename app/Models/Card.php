@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Card extends Model
 {
@@ -13,12 +14,10 @@ class Card extends Model
     protected $fillable = [
         'name',
         'set_id',
-        'type_id',
-        'subtype_id',
+        'supertype_id',
         'rarity_id',
         'mana_cost',
         'cmc',
-        'color_id',
         'number',
     ];
 
@@ -30,5 +29,20 @@ class Card extends Model
     public function variants(): HasMany
     {
         return $this->hasMany(Card::class, 'card_id', 'id');
+    }
+
+    public function types(): BelongsToMany
+    {
+        return $this->belongsToMany(Type::class);
+    }
+
+    public function subtypes(): BelongsToMany
+    {
+        return $this->belongsToMany(SubType::class);
+    }
+
+    public function color(): BelongsToMany
+    {
+        return $this->belongsToMany(Color::class);
     }
 }

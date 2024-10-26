@@ -13,6 +13,7 @@ class Set extends Model
     protected $fillable = [
         'code',
         'name',
+        'symbol_uri',
         'set_type_id',
         'block_id',
         'card_count',

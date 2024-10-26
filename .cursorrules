@@ -12,10 +12,10 @@ Dopo il delpoy della prima versione, si procederà alle funzionalità necessarie
 
 - Card
     - Set
-    - Color (no Model, solo tabella)
+    - Color
     - Supertype (no Model, solo tabella)
-    - Type (no Model, solo tabella)
-    - Subtype (no Model, solo tabella)
+    - Type
+    - Subtype
     - Rarity (no Model, solo tabella)
     - CardVariant
     - MarketInfo
