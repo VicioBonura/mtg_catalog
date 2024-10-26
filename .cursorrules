@@ -1,0 +1,17 @@
+# Contesto
+Questo è un progetto Laravel per la gestione di un catalogo di carte Magic: The Gathering.
+
+## Entità
+
+- Set
+    - Block
+
+- Card
+    - Type
+    - Subtype
+    - Rarity
+
+# Fonti e documentazione
+
+- https://docs.magicthegathering.io/
+- https://scryfall.com/docs/api
