@@ -1,15 +1,24 @@
 # Contesto
-Questo è un progetto Laravel per la gestione di un catalogo di carte Magic: The Gathering.
+Questo è un progetto Laravel per la gestione di un catalogo di carte "Magic The Gathering".
+Lo scopo del catalogo è tenere traccia delle carte in possesso dell'utente, tenendo conto di copie multiple, varianti della stessa classe (lingua diversa, versione foil o non foil, etc.) e del prezzo di mercato delle carte. L'applicazione terrà traccia dell'evoluzione dei prezzi per ogni carta presente in catalogo e permetterà di effettuare ricerche e filtri avanzati.
+
+Dopo il delpoy della prima versione, si procederà alle funzionalità necessarie per leggere automaticamente i dati sul valore di mercato delle carte da Scryfall e aggiornare il catalogo con i dati più recenti.
 
 ## Entità
 
 - Set
     - Block
+    - SetType (no Model, solo tabella)
 
 - Card
-    - Type
-    - Subtype
-    - Rarity
+    - Set
+    - Color (no Model, solo tabella)
+    - Supertype (no Model, solo tabella)
+    - Type (no Model, solo tabella)
+    - Subtype (no Model, solo tabella)
+    - Rarity (no Model, solo tabella)
+    - CardVariant
+    - MarketInfo
 
 # Fonti e documentazione
 

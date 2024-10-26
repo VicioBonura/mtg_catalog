@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cards', function (Blueprint $table) {
-            $table->id();
+            $table->id()->primary()->autoIncrement();
             $table->string('name');
             $table->foreignId('set_id')->constrained('sets');
             $table->foreignId('type_id')->constrained('types')->nullable();
@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('rarity_id')->constrained('rarities')->nullable();
             $table->string('mana_cost')->nullable();
             $table->integer('cmc')->nullable();
+            $table->foreignId('color_id')->constrained('colors')->nullable();
             $table->string('number')->nullable();
             $table->timestamps();
 
@@ -27,10 +28,11 @@ return new class extends Migration
             $table->foreign('type_id')->references('id')->on('types')->onDelete('set null');
             $table->foreign('subtype_id')->references('id')->on('subtypes')->onDelete('set null');
             $table->foreign('rarity_id')->references('id')->on('rarities')->onDelete('set null');
+            $table->foreign('color_id')->references('id')->on('colors')->onDelete('set null');
         });
 
         Schema::create('card_variants', function (Blueprint $table) {
-            $table->id();
+            $table->id()->primary()->autoIncrement();
             $table->foreignId('card_id')->constrained('cards');
             $table->string('language');
             $table->boolean('is_foil');
@@ -44,27 +46,34 @@ return new class extends Migration
         });
 
         Schema::create('supertypes', function (Blueprint $table) {
-            $table->id();
+            $table->id()->primary()->autoIncrement();
             $table->string('name')->unique();
             $table->timestamps();
         });
 
         Schema::create('types', function (Blueprint $table) {
-            $table->id();
+            $table->id()->primary()->autoIncrement();
             $table->string('name')->unique();
             $table->timestamps();
         });
 
         Schema::create('subtypes', function (Blueprint $table) {
-            $table->id();
+            $table->id()->primary()->autoIncrement();
             $table->string('name')->unique();
             $table->timestamps();
         });
 
         Schema::create('rarities', function (Blueprint $table) {
-            $table->id();
+            $table->id()->primary()->autoIncrement();
             $table->string('name')->unique();
             $table->timestamps();
+        });
+
+        Schema::create('colors', function (Blueprint $table) {
+            $table->id()->primary()->autoIncrement();
+            $table->string('name')->unique();
+            $table->string('code');
+            $table->string('symbol')->nullable();
         });
     }
 
