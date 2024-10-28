@@ -28,6 +28,11 @@ class Set extends Model
         return $this->hasMany(Card::class);
     }
 
+    public function setType(): BelongsTo
+    {
+        return $this->belongsTo(SetType::class);
+    }
+
     public function block(): BelongsTo
     {
         return $this->belongsTo(Block::class);

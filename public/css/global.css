@@ -1,0 +1,36 @@
+body {
+    grid-template-areas:
+        "header nav"
+        "content content"
+        "footer footer";
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+}
+
+header {
+    grid-area: header;
+
+    h1 {
+        margin-left:3rem;
+        margin-bottom:0;
+    }
+}
+
+nav {
+    grid-area: nav;
+    padding-right:3rem;
+
+    ul:last-of-type {
+        margin-right: 0;
+    }
+}
+
+content {
+    grid-area: content;
+}
+
+footer {
+    grid-area: footer;
+}
