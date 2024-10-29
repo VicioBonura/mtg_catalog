@@ -5,8 +5,12 @@
 @section('content')
 <div class="container-fluid">
     @if($cards->isEmpty())
-        <p>Catalogo vuoto</p>
-        <a href="{{ route('cards.create') }}" class="btn btn-primary">Aggiungi una carta</a>
+    <div class="h-100 flex-center">
+            <div>
+                <p class="text-center">Catalogo vuoto</p>
+                <a role="button" href="{{ route('cards.create') }}" class="btn btn-primary">Aggiungi una carta</a>
+            </div>
+        </div>
     @else
         <table class="table">
             <thead>

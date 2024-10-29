@@ -5,8 +5,12 @@
 @section('content')
 <div class="container-fluid">
     @if($sets->isEmpty())
-        <p>Catalogo vuoto</p>
-        <a href="{{ route('sets.create') }}" class="btn btn-primary">Aggiungi un set</a>
+        <div class="h-100 flex-center">
+            <div>
+                <p class="text-center">Catalogo vuoto</p>
+                <a role="button" href="{{ route('sets.create') }}" class="btn btn-primary">Aggiungi un set</a>
+            </div>
+        </div>
     @else
         <table class="table">
             <thead>
