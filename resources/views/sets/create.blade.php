@@ -1,9 +1,6 @@
 {{-- resources/views/sets/create.blade.php --}}
 @extends('layouts.app')
 @section('title', 'Nuovo Set - MTG Catalog')
-@section('styles')
-    <link rel="stylesheet" href="{{ asset('css/sets/create.css') }}">
-@endsection
 @section('header', 'Sets')
 @section('content')
 <div class="container main-content flex-center">

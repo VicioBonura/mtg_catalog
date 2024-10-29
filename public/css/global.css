@@ -1,5 +1,21 @@
 @import 'utils.css';
+:root {
+    --border-radius: 0.25rem;
 
+    /*colors*/
+    --primary-color: var(--pico-primary);
+    --muted-color: var(--pico-muted-color);
+
+    --bg-color: var(--pico-background-color);
+    --bg-alt-color: hsl(from var(--bg-color) h s 95%);
+
+    --border-color: var(--pico-form-element-border-color);
+    /*shadows*/
+    --box-shadow: var(--pico-box-shadow);
+}
+html[data-theme="dark"] {
+    --bg-alt-color: hsl(from var(--pico-background-color) h s calc(l * 1.25));
+}
 body {
     grid-template-areas:
         "header"
@@ -11,6 +27,7 @@ body {
     min-height: 100vh;
 }
 
+/* Header */
 .header {
     grid-area: header;
     position: sticky;
@@ -18,8 +35,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--pico-background-color);
-    border-bottom: 1px solid var(--pico-form-element-border-color);
+    background-color: var(--bg-color);
+    border-bottom: 1px solid var(--border-color);
 }
 
 header {
@@ -27,15 +44,16 @@ header {
     h1 {
         margin-left:3rem;
         margin-bottom:0;
-        color: var(--pico-primary);
+        color: var(--primary-color);
         font-size: 1.5rem;
     }
 }
 
+/* Nav */
 nav {
     padding-right:3rem;
 
-    ul:last-of-type {
+    ul {
         margin-right: 0;
 
         .visually-hidden {
@@ -46,14 +64,15 @@ nav {
     #themeSwitcher {
         margin-left: 0.5rem;
         padding-left: 1.5rem;
-        border-left: 1px solid var(--pico-form-element-border-color);
+        border-radius: 0;
+        border-left: 1px solid var(--border-color);
     }
 }
 
-.main-content {
+/* Main content */
+body > .main-content {
     grid-area: content;
 }
-
 
 /* Forms */
 .form {
@@ -105,17 +124,57 @@ nav {
     }
 }
 
-footer {
+/* Panels */
+.panel {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    text-align: center;
+    box-shadow: var(--box-shadow);
+
+    header, footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-inline: 1rem;
+        font-size: 1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+        height: 2rem;
+        margin: -1rem -1rem 1rem -1rem;
+        background-color: var(--bg-alt-color);
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    h2 {
+        margin-bottom: 0.5rem;
+        font-size: 1.5rem;
+    }
+
+    p {
+        font-size: 1.25rem;
+        margin: 0;
+    }
+
+    footer {
+        border-bottom: none;
+        border-top: 1px solid var(--border-color);
+    }
+}
+
+/* Footer */
+body > footer {
     grid-area: footer;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--pico-background-color);
-    border-top: 1px solid var(--pico-form-element-border-color);
+    background-color: var(--bg-color);
+    border-top: 1px solid var(--border-color);
 
     p {
         margin: 0;
         font-size: 0.8rem;
-        color: var(--pico-muted-color);
+        color: var(--muted-color);
     }
 }
