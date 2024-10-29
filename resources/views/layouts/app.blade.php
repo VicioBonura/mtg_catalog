@@ -11,6 +11,7 @@
     @yield('styles')
 </head>
 <body>
+    @include('partials.alerts')
     <div class="header">
         @include('partials.header')
         @include('partials.nav')

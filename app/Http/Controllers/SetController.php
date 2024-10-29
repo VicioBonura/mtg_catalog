@@ -42,6 +42,8 @@ class SetController extends Controller
             'release_date' => 'nullable|date',
         ]);
 
+        $validatedData['code'] = strtolower($validatedData['code']);
+        $validatedData['symbol_uri'] = $validatedData['code'] . '.svg';
         Set::create($validatedData);
         return redirect()->route('sets.index')->with('success', 'Set inserito con successo');
     }

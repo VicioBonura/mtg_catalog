@@ -1,0 +1,92 @@
+:root {
+    --error-bg: #ffcccc;
+    --error-color: #990000;
+    --success-bg: #ccffcc;
+    --success-color: #009900;
+    --warning-bg: #ffffcc;
+    --warning-color: #cc9900;
+    --info-bg: #ccffff;
+    --info-color: #0099ff;
+}
+
+html[data-theme="dark"] {
+    --error-bg: #990000;
+    --error-color: #ffcccc;
+    --success-bg: #009900;
+    --success-color: #ccffcc;
+    --warning-bg: #cc9900;
+    --warning-color: #663300;
+    --info-bg: #0099ff;
+    --info-color: #000033;
+}
+
+#alertContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.alert {
+    position: absolute;
+    top: 10px;
+    left:50%;
+    --n-alert: 0;
+    transform: translate(-50%, -150%);
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    background-color: var(--bg-alert);
+    border: 1px solid var(--border-alert);
+    z-index: calc(var(--n-alert) + 1000);
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+    animation: enter 0.5s ease-in-out calc(var(--n-alert) * 0.15s) forwards,
+               enter 0.5s ease-in-out calc(4s + var(--n-alert) * 0.15s) reverse forwards;
+}
+
+#alertContainer .alert:nth-child(2) {
+    --n-alert: 1;
+}
+
+#alertContainer .alert:nth-child(3) {
+    --n-alert: 2;
+}
+
+#alertContainer .alert:nth-child(4) {
+    --n-alert: 3;
+}
+
+@keyframes enter {
+    from {
+        transform: translate(-50%, -150%);
+    }
+    to {
+        transform: translate(-50%, calc((var(--n-alert) * 100%) + (var(--n-alert) * 10px)));
+    }
+}
+
+
+.alert-error {
+    background-color: var(--error-bg);
+    color: var(--error-color);
+    border-color: var(--error-color);
+}
+
+.alert-success {
+    background-color: var(--success-bg);
+    color: var(--success-color);
+    border-color: var(--success-color);
+}
+
+.alert-warning {
+    background-color: var(--warning-bg);
+    color: var(--warning-color);
+    border-color: var(--warning-color);
+}
+
+.alert-info {
+    background-color: var(--info-bg);
+    color: var(--info-color);
+    border-color: var(--info-color);
+}

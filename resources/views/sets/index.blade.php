@@ -1,6 +1,9 @@
 {{-- resources/views/cards/index.blade.php --}}
 @extends('layouts.app')
 @section('title', 'Sets - MTG Catalog')
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+@endsection
 @section('header', 'Sets')
 @section('content')
 <div class="container-fluid">
@@ -19,7 +22,7 @@
                     <th>Code</th>
                     <th>Tipo</th>
                     <th>Blocco</th>
-                    <th>Numero di carte</th>
+                    <th>Carte</th>
                     <th>Data di rilascio</th>
                     <th>Azioni</th>
                 </tr>
@@ -29,18 +32,21 @@
                 <tr>
                     <td>{{ $set->name }}</td>
                     <td>{{ $set->code }}</td>
-                    <td>{{ $set->setType->name }}</td>
-                    <td>{{ $set->block->name }}</td>
-                    <td>{{ $set->card_count }}</td>
-                    <td>{{ $set->release_date }}</td>
-                    <td>
-                        <a href="{{ route('sets.show', $set->id) }}" class="btn btn-info">Dettagli</a>
-                        <a href="{{ route('sets.edit', $set->id) }}" class="btn btn-warning">Modifica</a>
+                    <td>{{ $set->setType?->name }}</td>
+                    <td>{{ $set->block?->name }}</td>
+                    <td>{{ $set->card_count ?? '-' }}</td>
+                    <td>{{ $set->release_date ?? '-' }}</td>
+                    <td class="actions">
+                        <a href="{{ route('sets.show', $set->id) }}"><i class="bi bi-eye"></i><span class="visually-hidden">Dettagli</span></a>
+                        <a href="{{ route('sets.edit', $set->id) }}"><i class="bi bi-pencil"></i><span class="visually-hidden">Modifica</span></a>
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
     @endif
+    <a role="button" href="{{ route('sets.create') }}" class="btn btn-primary quick-action">
+        <i class="bi bi-plus"></i><span class="visually-hidden">Aggiungi Set</span>
+    </a>
 </div>
 @endsection
