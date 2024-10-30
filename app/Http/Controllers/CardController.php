@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Card;
 use Illuminate\Http\Request;
+use App\Models\Set;
+use App\Models\SetType;
+use App\Models\SubType;
+use Illuminate\Support\Facades\DB;
 
 class CardController extends Controller
 {
@@ -21,7 +25,15 @@ class CardController extends Controller
      */
     public function create()
     {
-        return view('cards.create');
+        $sets = Set::orderBy('name')->get();
+        $setTypes = SetType::orderBy('name')->get();
+        $superTypes = DB::table('super_types')->orderBy('name')->get();
+        $types = Type::orderBy('name')->get();
+        $subTypes = SubType::orderBy('name')->get();
+        $rarities = DB::table('rarities')->orderBy('name')->get();
+        $colors = Color::orderBy('name')->get();
+
+        return view('cards.create', compact('sets', 'setTypes', 'superTypes', 'types', 'subTypes', 'rarities', 'colors'));
     }
 
     /**

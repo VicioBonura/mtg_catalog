@@ -4,4 +4,9 @@
     text-decoration: none;
     margin: 0 0.1rem;
     color: var(--primary-color);
+    opacity: 0.5;
+
+    &:hover {
+        opacity: 1;
+    }
 }
