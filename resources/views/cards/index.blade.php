@@ -1,6 +1,9 @@
 {{-- resources/views/cards/index.blade.php --}}
 @extends('layouts.app')
 @section('title', 'Cards - MTG Catalog')
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+@endsection
 @section('header', 'Cards')
 @section('content')
 <div class="container-fluid">
@@ -14,11 +17,21 @@
     @else
         <table class="table">
             <thead>
+                <tr class="groups">
+                    <th colspan="5">Carta</th>
+                    <th colspan="1">Varianti</th>
+                    <th colspan="2">Market</th>
+                    <th></th>
+                </tr>
                 <tr>
                     <th>Nome</th>
                     <th>Set</th>
-                    <th>Rarità</th>
-                    <th>Prezzo</th>
+                    <th title="Rarità">R</th>
+                    <th title="Costo Mana">Mana</th>
+                    <th class="groupEnd" title="Costo Mana Convertito">CMC</th>
+                    <th class="groupEnd" title="Quantità (foil)">Pezzi</th>
+                    <th title="EUR">EUR</th>
+                    <th class="groupEnd" title="USD">USD</th>
                     <th>Azioni</th>
                 </tr>
             </thead>
@@ -28,10 +41,14 @@
                     <td>{{ $card->name }}</td>
                     <td>{{ $card->set->name }}</td>
                     <td>{{ $card->rarity }}</td>
-                    <td>{{ $card->market_price }}</td>
+                    <td>{{ $card->mana_cost }}</td>
+                    <td>{{ $card->cmc }}</td>
+                    <td>{{ $card->variants->sum('quantity') }} ({{ $card->variants->where('is_foil', true)->sum('quantity') }})</td>
+                    <td>{{ $card->marketInfos->sum('value_eur') }}</td>
+                    <td>{{ $card->marketInfos->sum('value_usd') }}</td>
                     <td>
-                        <a href="{{ route('cards.show', $card->id) }}" class="btn btn-info">Dettagli</a>
-                        <a href="{{ route('cards.edit', $card->id) }}" class="btn btn-warning">Modifica</a>
+                        <a href="{{ route('cards.show', $card->id) }}"><i class="bi bi-eye"></i><span class="visually-hidden">Dettagli</span></a>
+                        <a href="{{ route('cards.edit', $card->id) }}"><i class="bi bi-pencil"></i><span class="visually-hidden">Modifica</span></a>
                     </td>
                 </tr>
                 @endforeach

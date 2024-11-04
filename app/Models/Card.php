@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Card extends Model
@@ -29,7 +30,12 @@ class Card extends Model
 
     public function variants(): HasMany
     {
-        return $this->hasMany(Card::class, 'card_id', 'id');
+        return $this->hasMany(CardVariant::class);
+    }
+
+    public function marketInfos(): HasManyThrough
+    {
+        return $this->hasManyThrough(MarketInfo::class, CardVariant::class, 'card_id', 'card_variant_id');
     }
 
     public function types(): BelongsToMany
@@ -39,10 +45,10 @@ class Card extends Model
 
     public function subtypes(): BelongsToMany
     {
-        return $this->belongsToMany(SubType::class);
+        return $this->belongsToMany(SubType::class, 'card_subtype', 'card_id', 'subtype_id');
     }
 
-    public function color(): BelongsToMany
+    public function colors(): BelongsToMany
     {
         return $this->belongsToMany(Color::class);
     }

@@ -1,3 +1,24 @@
+/* table */
+tr.groups th{
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 300;
+    border-bottom: 0;
+    border-right: 1px solid var(--border-color);
+
+    &:last-child{
+        border-right: 0;
+    }
+}
+
+th.groupStart{
+    border-left: 1px solid var(--border-color);
+}
+
+th.groupEnd{
+    border-right: 1px solid var(--border-color);
+}
+
 /* action buttons */
 .actions a {
     display: inline;

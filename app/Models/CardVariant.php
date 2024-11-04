@@ -23,7 +23,7 @@ class CardVariant extends Model
         return $this->belongsTo(Card::class);
     }
 
-    public function marketInfo(): HasMany
+    public function marketInfos(): HasMany
     {
         return $this->hasMany(MarketInfo::class);
     }

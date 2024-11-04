@@ -19,7 +19,7 @@ class CardController extends Controller
      */
     public function index()
     {
-        $cards = Card::all();
+        $cards = Card::with(['variants', 'marketInfos'])->get();
         return view('cards.index', compact('cards'));
     }
 
@@ -44,9 +44,12 @@ class CardController extends Controller
      */
     public function store(Request $request)
     {
-        $request->merge([
-            'is_foil' => $request->has('is_foil') ? true : false,
-        ]);
+        if(!$request->has('is_foil')) {
+            $request->merge(['is_foil' => false]);
+        } else {
+            $request->merge(['is_foil' => true]);
+        }
+
         if ($request->input('use_existing') == 'true') {
             $validated = $request->validate([
                 'card_id' => 'required|exists:cards,id',
@@ -86,14 +89,31 @@ class CardController extends Controller
 
             $validated['card_id'] = $card->id;
         }
-        $validated['is_foil'] = $validated['is_foil'] === null ? true : false;
+
+        //colors
+        if (isset($validated['colors'])) {
+            $card->colors()->sync($validated['colors']);
+        }
+
+        //types
+        if (isset($validated['types'])) {
+            $card->types()->sync($validated['types']);
+        }
+
+        //subtypes
+        if (isset($validated['subtypes'])) {
+            $card->subtypes()->sync($validated['subtypes']);
+        }
+
+        //variant
         $variantData = Arr::only($validated, ['card_id', 'local_name', 'language', 'quantity', 'is_foil']);
         $variant = CardVariant::create($variantData);
         $validated['card_variant_id'] = $variant->id;
 
+        //market info
         $marketInfoData = Arr::only($validated, ['card_variant_id', 'value_eur', 'value_usd']);
         MarketInfo::create($marketInfoData);
-        
+
         return redirect()->route('cards.index')->with('success', 'Carta inserita con successo');
     }
 
