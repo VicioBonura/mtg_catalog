@@ -45,8 +45,8 @@ return new class extends Migration
         Schema::create('market_infos', function (Blueprint $table) {
             $table->id()->primary()->autoIncrement();
             $table->foreignId('card_variant_id')->constrained('card_variants')->onDelete('cascade');
-            $table->decimal('value_eur', 10, 2);
-            $table->decimal('value_usd', 10, 2);
+            $table->decimal('value_eur', 10, 2)->nullable();
+            $table->decimal('value_usd', 10, 2)->nullable();
             $table->timestamps();
         });
 

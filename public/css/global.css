@@ -12,6 +12,7 @@
 
     --bg-color: var(--pico-background-color);
     --bg-alt-color: hsl(from var(--bg-color) h s 95%);
+    --bg-input-color: var(--pico-form-element-background-color);
 
     --border-color: var(--pico-form-element-border-color);
     /*shadows*/
@@ -41,6 +42,7 @@ body {
     align-items: center;
     background-color: var(--bg-color);
     border-bottom: 1px solid var(--border-color);
+    z-index: 999;
 }
 
 header {
@@ -104,15 +106,41 @@ body > .main-content {
     h3 {
         text-align: center;
     }
+
+    &.form-xl {
+        max-width: 900px;
+    }
+
+    fieldset {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 0.5rem;
+        margin: 0.5rem 0;
+
+        &[disabled] {
+            opacity: 0.5;
+        }
+
+        &.hidden {
+            display: none;
+        }
+    }
 }
 .form-group {
     position: relative;
 
-    input, select {
+    input:not([type="checkbox"]), select {
         padding-top: 1.2rem;
         padding-bottom: 0.5rem;
         height: 3rem;
         margin: 0;
+    }
+
+    input[disabled], select[disabled] {
+        opacity: 0.5;
+        & + label {
+            opacity: 0.25;
+        }
     }
 
     input::-webkit-outer-spin-button,
@@ -123,6 +151,7 @@ body > .main-content {
 
     select {
         line-height: 22px;
+        height: 100%;
     }
     input::placeholder {
         color: transparent;
@@ -132,7 +161,7 @@ body > .main-content {
         text-align: center;
     }
 
-    label {
+    input:not([type="checkbox"]) + label, select + label {
         position: absolute;
         top: 0;
         left: 0;
@@ -141,11 +170,34 @@ body > .main-content {
         transition: all 0.2s ease-in-out;
     }
 
+    select[multiple] + label {
+        background-color: var(--bg-input-color);
+        width:calc(100% - 20px);
+    }
+
     input:focus + label, input:not(:placeholder-shown) + label, 
     select + label, 
     input[type="date"] + label {
-        transform: translateY(0.15rem);
+        transform: translate(1px, 1px);
         font-size: 0.75rem;
+    }
+
+    button {
+        width: 100%;
+        margin: 0;
+    }
+
+    &.btn-group {
+        display: flex;
+        gap: 0.5rem;
+
+        &.submit-group {
+            justify-content: flex-end;
+        }
+
+        button, a {
+            width: fit-content;
+        }
     }
 }
 
@@ -203,17 +255,3 @@ body > footer {
         color: var(--muted-color);
     }
 }
-
-/* Sostituisci tutte le classi .span- con .col-span- */
-.col-span-1 { grid-column: span 1; }
-.col-span-2 { grid-column: span 2; }
-.col-span-3 { grid-column: span 3; }
-.col-span-4 { grid-column: span 4; }
-.col-span-5 { grid-column: span 5; }
-.col-span-6 { grid-column: span 6; }
-.col-span-7 { grid-column: span 7; }
-.col-span-8 { grid-column: span 8; }
-.col-span-9 { grid-column: span 9; }
-.col-span-10 { grid-column: span 10; }
-.col-span-11 { grid-column: span 11; }
-.col-span-12 { grid-column: span 12; }

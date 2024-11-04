@@ -38,6 +38,9 @@
             </tbody>
         </table>
     @endif
+    <a role="button" href="{{ route('cards.create') }}" class="btn btn-primary quick-action">
+        <i class="bi bi-plus"></i><span class="visually-hidden">Aggiungi Carta</span>
+    </a>
 </div>
 @endsection
 
